@@ -5,6 +5,8 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_stdinc.h>
 #include <assert.h>
+#include <limits.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -15,7 +17,6 @@ int main(void)
     bool quit = false;
     sdl_setup();
     printf("Ok\n");
-
     while (!quit)
     {
         SDL_Event event;
@@ -29,17 +30,26 @@ int main(void)
             }
         }
     }
-
+    printf("Exiting...\n");
     SDL_Quit();
     return 0;
 }
 
 void oscillator(Sint16 *stream, size_t len)
 {
+    Sint16 frequency, volume_limit, delta, position;
+    frequency = 440;
+    volume_limit = floor(INT16_MAX * 0.01);
+    delta = floor((double)frequency / SAMPLE_RATE);
+    position = 0;
+    printf("Volume Limit: %d\n", volume_limit);
     for (size_t i = 0; i < len; i++)
     {
-	Sint16 val = 0;
-	stream[i] = val;
+        position = position + delta;
+        if (position == volume_limit)
+            position = position - volume_limit;
+        printf("%i  ", position);
+        stream[i] = position;
     }
 }
 
@@ -66,6 +76,7 @@ void sdl_setup(void)
         .size = AUDIO_BUF_SIZE,
         .callback = audio_callback,
     };
+    SDL_AudioSpec obtained = {0};
 
     SDL_AudioDeviceID dev = SDL_OpenAudioDevice(NULL, 0, &want, NULL, SDL_AUDIO_ALLOW_ANY_CHANGE);
     if (dev < 1)
