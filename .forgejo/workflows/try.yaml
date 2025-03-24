@@ -1,8 +1,12 @@
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
 jobs:
   ls:
-    runs-on: ubuntu-22.04:docker://node:20-bullseye
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: |
-          ls *
+      - id: echo
+        run: echo "all good"
