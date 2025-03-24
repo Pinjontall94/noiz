@@ -8,5 +8,5 @@ jobs:
   ls:
     runs-on: ubuntu-latest
     steps:
-      - id: echo
-        run: echo "all good"
+      - id: ls_all
+        run: ls *
