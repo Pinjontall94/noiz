@@ -8,7 +8,7 @@ jobs:
   checkout:
     runs-on: ubuntu-latest
     steps:
-      - id: gh_checkout
+      - id: cb_checkout
         uses: actions/checkout@v4
       - id: ls_proj
         run: ls
