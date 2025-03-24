@@ -5,8 +5,10 @@ on:
     branches: [main]
 
 jobs:
-  ls:
+  checkout:
     runs-on: ubuntu-latest
     steps:
-      - id: ls_all
-        run: ls -lh
+      - id: gh_checkout
+        uses: actions/checkout@v4
+      - id: ls_proj
+        run: ls
