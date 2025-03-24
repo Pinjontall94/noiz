@@ -5,5 +5,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          ls ${{ github.workspace }}
-          echo hi there
+          ls *
