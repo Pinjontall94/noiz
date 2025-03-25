@@ -1,0 +1,14 @@
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - id: cb_checkout
+        uses: actions/checkout@v4
+      - id: ls_proj
+        run: ls
